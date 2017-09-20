@@ -12,7 +12,7 @@ from cassandra.auth import PlainTextAuthProvider
 
 import yaml
 
-with open("config.yaml", 'r') as ymlfile:
+with open("/etc/caret-metrics/config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
 auth_provider = PlainTextAuthProvider(
