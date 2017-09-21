@@ -7,8 +7,8 @@ from metrics.kamelefon.PhoneNumberData import PhoneNumberData
 from metrics.users.DailyActiveUsers import DailyActiveUsers
 from metrics.users.MonthlyActiveUsers import MonthlyActiveUsers
 from metrics.users.UserCountries import UserCountries
-from metrics.twilio.TwilioDailyCalls import TwilioDailyCalls
-from metrics.twilio.TwilioMonthlyCalls import TwilioMonthlyCalls
+from metrics.twilio.TwilioDailyVoIPCalls import TwilioDailyVoIPCalls
+from metrics.twilio.TwilioMonthlyVoIPCalls import TwilioMonthlyVoIPCalls
 
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
