@@ -11,7 +11,6 @@ class DailyMessages(QueryBase):
         self.msg_ids = set()
         timestamp = int(time.time())
         msg_tss = self.session.execute('SELECT msg_id, timestamp from caret_message_timestamps')
-        print 'Timespan: %s' % self.timespan
         for msg_ts in msg_tss:
             if msg_ts.timestamp is not None:
                 if msg_ts.timestamp.year < 1900:

@@ -4,15 +4,17 @@ import time
 
 class DailyActiveUsers(QueryBase):
 
+    timespan = 24*60*60
+
     def run(self):
         self.session.set_keyspace('ejabberd')
-        self.dau_users = []
+        self.active_users = []
         timestamp = int(time.time())
         lasts = self.session.execute('select * from last')
         for last in lasts:
-            if timestamp-int(last.seconds) <= 24*60*60:
-                self.dau_users.append(int(last.username))
-        return {"dau_users_count": len(self.dau_users)}
+            if timestamp-int(last.seconds) <= self.timespan:
+                self.active_users.append(int(last.username))
+        return {"active_users_count": len(self.active_users)}
 
     def get_users(self):
-        return self.dau_users
+        return self.active_users

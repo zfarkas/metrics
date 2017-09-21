@@ -11,6 +11,7 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
 import yaml
+import json
 
 with open("/etc/caret-metrics/config.yaml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
@@ -20,12 +21,17 @@ auth_provider = PlainTextAuthProvider(
 cluster = Cluster(cfg['CASSANDRA_HOSTS'], auth_provider=auth_provider)
 session = cluster.connect()
 
+
+
 mau = MonthlyActiveUsers(session)
 dau = DailyActiveUsers(session)
-userc = UserCountries(session)
-queries = [mau, dau, DailyMessages(session), MonthlyMessages(session)]
+queries = [DeviceData(session), PhoneNumberData(session), mau, dau, DailyMessages(session), MonthlyMessages(session), ChatConvNum(session)]
+
+rv = {}
 
 for query in queries:
-    print query.run()
+    qres = query.run()
+    rv[query.__class__.__name__] = qres
 
-print userc.run(mau.get_users())
+with open('/tmp/metrics-result.json', 'w') as fp:
+    json.dump(rv, fp, sort_keys=True, indent=4)
