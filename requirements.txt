@@ -2,3 +2,4 @@ cassandra-driver
 phonenumbers
 pycountry
 PyYAML
+twilio

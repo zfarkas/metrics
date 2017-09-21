@@ -7,9 +7,13 @@ from metrics.kamelefon.PhoneNumberData import PhoneNumberData
 from metrics.users.DailyActiveUsers import DailyActiveUsers
 from metrics.users.MonthlyActiveUsers import MonthlyActiveUsers
 from metrics.users.UserCountries import UserCountries
+from metrics.twilio.TwilioDailyCalls import TwilioDailyCalls
+from metrics.twilio.TwilioMonthlyCalls import TwilioMonthlyCalls
 
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
+
+from twilio.rest import Client
 
 import yaml
 import json
@@ -23,11 +27,14 @@ auth_provider = PlainTextAuthProvider(
 cluster = Cluster(cfg['CASSANDRA_HOSTS'], auth_provider=auth_provider)
 session = cluster.connect()
 
-
+twilio_session = Client(cfg['TWILIO_ACCOUNT_SID'], cfg['TWILIO_ACCOUNT_TOKEN'])
 
 mau = MonthlyActiveUsers(session)
 dau = DailyActiveUsers(session)
-queries = [DeviceData(session), PhoneNumberData(session), mau, dau, DailyMessages(session), MonthlyMessages(session), ChatConvNum(session)]
+queries = [ChatMessageNum(session), DeviceData(session),
+    PhoneNumberData(session), mau, dau, DailyMessages(session),
+    MonthlyMessages(session), ChatConvNum(session),
+    TwilioDailyCalls(twilio_session), TwilioMonthlyCalls(twilio_session)]
 
 rv = {}
 
