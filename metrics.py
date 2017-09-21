@@ -1,5 +1,5 @@
 from metrics.chat.ChatConvNum import ChatConvNum
-from metrics.chat.ChatConvNum import ChatMessageNum
+from metrics.chat.ChatMessageNum import ChatMessageNum
 from metrics.chat.DailyMessages import DailyMessages
 from metrics.chat.MonthlyMessages import MonthlyMessages
 from metrics.kamelefon.DeviceData import DeviceData
