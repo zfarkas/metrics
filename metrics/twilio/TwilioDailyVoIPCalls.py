@@ -2,7 +2,7 @@ from ..base.QueryBase import QueryBase
 
 import datetime
 
-class TwilioDailyCalls(QueryBase):
+class TwilioDailyVoIPCalls(QueryBase):
 
     timespan = 24*60*60
 

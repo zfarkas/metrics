@@ -1,5 +1,5 @@
-from TwilioDailyCalls import TwilioDailyCalls
+from TwilioDailyVoIPCalls import TwilioDailyVoIPCalls
 
-class TwilioMonthlyCalls(TwilioDailyCalls):
+class TwilioMonthlyVoIPCalls(TwilioDailyVoIPCalls):
 
     timespan = 30*24*60*60
