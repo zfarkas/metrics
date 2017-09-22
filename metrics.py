@@ -7,8 +7,10 @@ from metrics.kamelefon.PhoneNumberData import PhoneNumberData
 from metrics.users.DailyActiveUsers import DailyActiveUsers
 from metrics.users.MonthlyActiveUsers import MonthlyActiveUsers
 from metrics.users.UserCountries import UserCountries
-from metrics.twilio.TwilioDailyVoIPCalls import TwilioDailyVoIPCalls
-from metrics.twilio.TwilioMonthlyVoIPCalls import TwilioMonthlyVoIPCalls
+from metrics.twilio.TwilioDailyCalls import TwilioDailyCalls
+from metrics.twilio.TwilioMonthlyCalls import TwilioMonthlyCalls
+from metrics.twilio.TwilioDailySMS import TwilioDailySMS
+from metrics.twilio.TwilioMonthlySMS import TwilioMonthlySMS
 
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
@@ -31,10 +33,12 @@ twilio_session = Client(cfg['TWILIO_ACCOUNT_SID'], cfg['TWILIO_ACCOUNT_TOKEN'])
 
 mau = MonthlyActiveUsers(session)
 dau = DailyActiveUsers(session)
-queries = [ChatMessageNum(session), DeviceData(session),
-    PhoneNumberData(session), mau, dau, DailyMessages(session),
-    MonthlyMessages(session), ChatConvNum(session),
-    TwilioDailyCalls(twilio_session), TwilioMonthlyCalls(twilio_session)]
+queries = [
+    TwilioDailyCalls(twilio_session), TwilioMonthlyCalls(twilio_session),
+    TwilioDailySMS(twilio_session), TwilioMonthlySMS(twilio_session),
+    ChatMessageNum(session), DailyMessages(session), MonthlyMessages(session), ChatConvNum(session),
+    DeviceData(session), PhoneNumberData(session),
+    mau, dau]
 
 rv = {}
 
